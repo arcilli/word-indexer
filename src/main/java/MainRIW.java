@@ -83,7 +83,7 @@ public class MainRIW {
 //        Lab01();
 //        Lab02();
 //        Lab03();
-//        Lab04();
-        Lab05();
+        Lab04();
+//        Lab05();
     }
 }

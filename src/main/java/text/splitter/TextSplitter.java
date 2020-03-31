@@ -1,5 +1,6 @@
 package text.splitter;
 
+import stemmer.Stemmer;
 import text.processing.WordFilter;
 
 import java.io.*;
@@ -7,6 +8,8 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 
 public class TextSplitter {
+    private Stemmer stemmer = new Stemmer();
+
     public static HashMap<String, Integer> createDirectIndexFromFile(String fileName) throws IOException {
         HashMap<String, Integer> wordCount = new HashMap<>();
         WordFilter wordFilter = new WordFilter();
@@ -22,8 +25,8 @@ public class TextSplitter {
                     stringBuilder.append(ch);
                 } else {
                     // Just found a word.
-                    String wordToBeStored = stringBuilder.toString().toLowerCase();
-                    if (wordFilter.shouldBeStored(wordToBeStored)) {
+                    String wordToBeStored = wordFilter.storeIfExceptionOrDictionary(stringBuilder.toString().toLowerCase());
+                    if (null != wordToBeStored) {
                         if (wordCount.containsKey(wordToBeStored)) {
                             wordCount.put(wordToBeStored,
                                     wordCount.get(wordToBeStored) + 1);

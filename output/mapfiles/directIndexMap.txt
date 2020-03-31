@@ -1,7 +1,0 @@
-files/inputs2/javascript.txt output/files/inputs2/b0.idx
-files/inputs2/php.txt output/files/inputs2/b0.idx
-files/inputs2/d1/csharp.txt output/files/inputs2/d1/b1.idx
-files/inputs2/d1/c.txt output/files/inputs2/d1/b1.idx
-files/inputs2/d1/d2/java.txt output/files/inputs2/d1/d2/b2.idx
-files/inputs2/d1/d2/python.txt output/files/inputs2/d1/d2/b2.idx
-files/inputs2/d1/d2/ruby.txt output/files/inputs2/d1/d2/b2.idx

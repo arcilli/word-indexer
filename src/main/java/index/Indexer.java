@@ -16,7 +16,6 @@ public class Indexer {
     public Indexer(File directory) {
         directoryQueue = new LinkedList<>();
         directoryQueue.add(directory);
-
     }
 
     public void createDirectIndexAndMapFiles() throws IOException {

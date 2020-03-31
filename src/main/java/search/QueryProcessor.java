@@ -27,8 +27,9 @@ public class QueryProcessor {
                     stringBuilder.append(originalQuery.charAt(i));
                 } else {
                     // Just found a sign.
-                    if (wordFilter.shouldBeStored(stringBuilder.toString())) {
-                        queryTerms.add(stringBuilder.toString().toLowerCase());
+                    String word = wordFilter.storeIfExceptionOrDictionary(stringBuilder.toString().toLowerCase());
+                    if (null != word) {
+                        queryTerms.add(word);
                     }
                     // Add the sign to operation list.
                     operations.add(originalQuery.charAt(i));
@@ -36,8 +37,9 @@ public class QueryProcessor {
                 }
             }
         }
-        if (wordFilter.shouldBeStored(stringBuilder.toString())) {
-            queryTerms.add(stringBuilder.toString().toLowerCase());
+        String word = wordFilter.storeIfExceptionOrDictionary(stringBuilder.toString().toLowerCase());
+        if (null != word) {
+            queryTerms.add(word);
         }
     }
 }

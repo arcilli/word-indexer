@@ -1,5 +1,8 @@
 package text.processing;
 
+import com.mongodb.lang.Nullable;
+import stemmer.Stemmer;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
@@ -11,20 +14,21 @@ public class WordFilter {
     private File exceptionsFile = new File("files/exceptions.txt");
     private List<String> exceptions = new LinkedList<>();
     private List<String> stopWords = new LinkedList<>();
+    private Stemmer stemmer = new Stemmer();
 
     public WordFilter() throws FileNotFoundException {
         loadFromFile();
     }
 
-
-    public boolean shouldBeStored(String word) {
+    @Nullable
+    public String storeIfExceptionOrDictionary(String word) {
         if (exceptions.contains(word.toLowerCase())) {
-            return true;
-        } else if (!stopWords.contains(word.toLowerCase())) {
-            //string getBaseFrom()
-            return true;
+            return word;
         }
-        return false;
+        if (!stopWords.contains(word.toLowerCase())) {
+            return stemmer.stem(word.toLowerCase());
+        }
+        return null;
     }
 
     private void loadFromFile() throws FileNotFoundException {
