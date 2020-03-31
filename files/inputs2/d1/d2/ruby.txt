@@ -1,0 +1,5 @@
+Ruby is a language of careful balance. Its creator, Yukihiro “Matz” Matsumoto, blended parts of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and Lisp) to form a new language that balanced functional programming with imperative programming.
+He has often said that he is “trying to make Ruby natural, not simple,” in a way that mirrors life.
+Building on this, he adds: Ruby is simple in appearance, but is very complex inside, just like our human body1.
+About Ruby’s Growth
+Since its public release in 1995, Ruby has drawn devoted coders worldwide. In 2006, Ruby achieved mass acceptance. With active user groups formed in the world’s major cities and Ruby-related conferences filled to capacity.
