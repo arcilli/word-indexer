@@ -171,7 +171,7 @@ public class Indexer {
                     if (file.isDirectory()) {
                         directoryQueueCopy.add(file);
                     } else {
-                        Document document = createWordCountJsonForFile(TextSplitter.createDirectIndexFromFile(file.toString()),
+                        Document document = createDirectIndexJsonForFile(TextSplitter.createDirectIndexFromFile(file.toString()),
                                 file.toString());
                         collection.insertOne(document);
                     }
@@ -180,7 +180,7 @@ public class Indexer {
         }
     }
 
-    private Document createWordCountJsonForFile(HashMap<String, Integer> wordCount, String fileName) {
+    public static Document createDirectIndexJsonForFile(HashMap<String, Integer> wordCount, String fileName) {
         Document document = new Document("doc", fileName);
         List<Document> array = new ArrayList<>();
         for (String string : wordCount.keySet()) {

@@ -1,5 +1,6 @@
 import index.Indexer;
 import org.bson.Document;
+import parallelization.Master;
 import search.impl.BooleanSearch;
 import text.splitter.TextSplitter;
 import webpage.parser.PageInfo;
@@ -67,23 +68,29 @@ public class MainRIW {
             indexer.createDirectIndexAndMapFiles();
             indexer.persistDirectIndex();
 
-            // Create reverse index
+            // Create reverse index.
             indexer = new Indexer(
                     new File("output/files/inputs"));
             HashMap<String, HashMap<String, Integer>> reverseIndex = indexer.createReverseIndex();
             List<Document> reverseIndexJson = indexer.createJsonForReverseIndex(reverseIndex);
-            // Persist it
+            // Persist it.
             indexer.persistReverseIndexJson(reverseIndexJson);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public static void ParallelRun() {
+        Master master = new Master("files/inputs");
+        master.run();
+    }
+
     public static void main(String[] args) throws IOException {
 //        Lab01();
 //        Lab02();
 //        Lab03();
-        Lab04();
+//        Lab04();
 //        Lab05();
+        ParallelRun();
     }
 }
