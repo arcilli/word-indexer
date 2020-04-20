@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Introducere}{3}% 
+\contentsline {section}{\numberline {2}Modelul MapReduce}{3}% 
+\contentsline {subsection}{\numberline {2.1}Etapele MapReduce}{3}% 
+\contentsline {section}{\numberline {3}Hadoop}{3}% 
+\contentsline {subsection}{\numberline {3.1}Mod de func\IeC {\textcommabelow t}ionare}{3}% 
+\contentsline {section}{\numberline {4}Implementare tem\IeC {\u a} de cas\IeC {\u a}}{4}% 
+\contentsline {subsection}{\numberline {4.1}Considerente generale}{4}% 
+\contentsline {subsection}{\numberline {4.2}Cod surs\IeC {\u a}}{4}% 
+\contentsline {section}{\numberline {5}Bibliografie}{8}% 
