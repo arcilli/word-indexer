@@ -24,29 +24,30 @@ public class Master {
         ExecutorService executor = Executors.newFixedThreadPool(5);
         try {
             for (File file : new ArrayList<>(fileList)) {
-                executor.execute(new Worker(file.toString(), IndexType.DIRECT));
+                executor.execute(new Worker(file.toString(), WORK_TYPE.DIRECT_INDEX));
             }
             executor.shutdown();
             while (!executor.isTerminated()) {
                 ;
             }
-            log.info("Done with direct indexes.");
+            System.out.println("Done with direct indexes.");
         } catch (Exception e) {
             e.printStackTrace();
             executor.shutdown();
         }
 
 //        Work on reverse index.
-        executor = Executors.newFixedThreadPool(10);
+        executor = Executors.newFixedThreadPool(5);
         try {
-            for (File file : new ArrayList<>(fileList)) {
-                executor.execute(new Worker(file.toString(), IndexType.REVERSE));
+            List<File> fileListCopy = new ArrayList<>(fileList);
+            for (File file : fileListCopy) {
+                executor.execute(new Worker(file.toString(), WORK_TYPE.REVERSE_INDEX));
             }
             executor.shutdown();
             while (!executor.isTerminated()) {
                 ;
             }
-            log.info("Done with indexes. :)");
+            System.out.println("Done with indexes. :)");
         } catch (Exception e) {
             e.printStackTrace();
         }

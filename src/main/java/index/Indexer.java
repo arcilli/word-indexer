@@ -82,7 +82,7 @@ public class Indexer {
         return map;
     }
 
-    // Assumes that the direct index is already created.
+    // Assume that the direct index is already created.
     public HashMap<String, HashMap<String, Integer>> createReverseIndex() throws IOException {
         HashMap<String, HashMap<String, Integer>> reverseIndex = new HashMap<>();
         File mapFile = new File("output/mapfiles/reverseIndexMap.txt");

@@ -16,18 +16,18 @@ import java.util.List;
 @Log
 public class Worker implements Runnable {
     private String filePath;
-    private IndexType indexType;
+    private WORK_TYPE workType;
 
     private MongoOperations mongoOps = new MongoTemplate(MongoClients.create(), "test");
 
-    public Worker(String filePath, IndexType indexType) {
+    public Worker(String filePath, WORK_TYPE workType) {
         this.filePath = filePath;
-        this.indexType = indexType;
+        this.workType = workType;
     }
 
     @Override
     public void run() {
-        if (IndexType.DIRECT == indexType) {
+        if (WORK_TYPE.DIRECT_INDEX == workType) {
             try {
                 HashMap<String, Integer> wordNoOcc = TextSplitter.createDirectIndexFromFile(filePath);
                 DirectIndexDoc directIndexDoc = new DirectIndexDoc(filePath, null);
@@ -36,7 +36,7 @@ public class Worker implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (IndexType.REVERSE == indexType) {
+        } else if (WORK_TYPE.REVERSE_INDEX == workType) {
             log.info("Getting direct index & revert for: " + filePath);
             DirectIndexDoc directIndexDoc = getDirectIndexDocForFile(filePath);
             if (null != directIndexDoc) {
