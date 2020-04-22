@@ -8,14 +8,12 @@ import java.util.Queue;
 
 public class QueryProcessor {
 
-    // Use *public* fields since these will be modified while processing term by term.
+    // Use *public* fields since these will be modified while iterating term by term.
     public Queue<String> queryTerms;
     public Queue<Character> operations;
 
     public void parse(String originalQuery) {
 
-        // Izolare cuvinte și izolare operatori.
-        // Filtrare cuvinte & transformare in lowercase.
         queryTerms = new LinkedList<>();
         operations = new LinkedList<>();
 

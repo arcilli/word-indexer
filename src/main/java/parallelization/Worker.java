@@ -1,7 +1,6 @@
 package parallelization;
 
 import com.mongodb.client.MongoClients;
-import lombok.extern.java.Log;
 import model.indexes.DirectIndexDoc;
 import model.indexes.ReverseIndexDoc;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -13,7 +12,6 @@ import text.splitter.TextSplitter;
 import java.util.HashMap;
 import java.util.List;
 
-@Log
 public class Worker implements Runnable {
     private String filePath;
     private WORK_TYPE workType;
@@ -37,10 +35,10 @@ public class Worker implements Runnable {
                 e.printStackTrace();
             }
         } else if (WORK_TYPE.REVERSE_INDEX == workType) {
-            log.info("Getting direct index & revert for: " + filePath);
+            System.out.println("Getting direct index & revert for: " + filePath);
             DirectIndexDoc directIndexDoc = getDirectIndexDocForFile(filePath);
             if (null != directIndexDoc) {
-                log.info("Persist file: " + filePath + " using individual entities");
+                System.out.println("Persist file: " + filePath + " using individual entities");
                 ReverseIndexDoc.persistPartialReverseIndex(mongoOps, directIndexDoc);
             }
         }

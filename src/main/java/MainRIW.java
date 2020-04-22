@@ -9,8 +9,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class MainRIW {
+    private static BooleanSearch booleanSearch = new BooleanSearch();
+    private static VectorialSearch vectorialSearch = new VectorialSearch();
 
     public static void Lab01() throws IOException {
         PageInfo pageInfo = new PageInfo("https://www.tuiasi.ro/");
@@ -35,7 +38,7 @@ public class MainRIW {
         directoryProcessing.createReverseIndex();
     }
 
-    public static void Lab04() throws IOException {
+    public void Lab04() throws IOException {
         Indexer directoryProcessing = new Indexer(
                 new File("files/inputs2"));
         directoryProcessing.createDirectIndexAndMapFiles();
@@ -45,14 +48,12 @@ public class MainRIW {
         directoryProcessing.createReverseIndex();
 
         // Assume that reverse index is already created.
-        booleanSearchLoop();
+        booleanSearch();
     }
 
-    private static void booleanSearchLoop() throws IOException {
-        BooleanSearch booleanSearch = new BooleanSearch();
-        while (true) {
-            String query = getQuery();
-            if (query == null) break;
+    private static void booleanSearch() throws IOException {
+        String query = getQuery();
+        if (query != null) {
             System.out.println("Result: " + booleanSearch.search(query));
         }
     }
@@ -74,17 +75,17 @@ public class MainRIW {
         master.run();
     }
 
-    public static void Project() {
-        VectorialSearch vectorialSearch = new VectorialSearch();
+    public static void vectorialSearch() {
         try {
-            while (true) {
-                String query = getQuery();
-                if (query == null) break;
+            String query = getQuery();
+            if (query != null) {
                 System.out.println("Result: " + vectorialSearch.search(query));
             }
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args) throws IOException {
@@ -93,6 +94,25 @@ public class MainRIW {
 //        Lab03();
 //        ParallelIndexesCreator();
 //        Lab04();
-        Project();
+//        vectorialSearch();
+        while (true) {
+            System.out.println("===1: cautare booleana===");
+            System.out.println("===2: cautare vectoriala===");
+            System.out.println("===exit: bye===");
+            System.out.println("Your option: ");
+            Scanner in = new Scanner(System.in);
+            String input = in.nextLine();
+            switch (input) {
+                case "1":
+                    booleanSearch();
+                    break;
+                case "2":
+                    vectorialSearch();
+                    break;
+                case "exit":
+                    return;
+                default:
+            }
+        }
     }
 }

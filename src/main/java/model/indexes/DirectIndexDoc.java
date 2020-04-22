@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+
 public class DirectIndexDoc {
     private String file;
     private List<DirectIndexTuple> listOfWords;

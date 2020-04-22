@@ -15,9 +15,4 @@ public class DirectIndexTuple {
     private Integer noOcc;
     private Double termFrequency = -1.0;
 
-    // Used for creating a partial-filled object.
-    public DirectIndexTuple(String word, Integer noOcc) {
-        this.word = word;
-        this.noOcc = noOcc;
-    }
 }

@@ -23,11 +23,11 @@ public interface Search {
     @Nullable
     Set<String> search(String query);
 
-    @Nullable
     /**
      * Retrieve files that contains a term from DB.
      * It's using reverseIndexDoc collection, it should be already populated.
      */
+    @Nullable
     default Set<String> getFilesContainingTermFromDB(String term) {
         Query query = new Query();
         query.addCriteria(Criteria.where("word").is(term));
@@ -43,31 +43,6 @@ public interface Search {
         }
         return files;
     }
-
-//    default DirectIndexTuple getTermFreqFromFile(String file, String key) {
-//        MongoOperations mongoOps = new MongoTemplate(MongoClients.create(), "test");
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("file").is(file));
-//        query.addCriteria(Criteria.where("listOfWords").elemMatch(Criteria.where("word").is(key)));
-//
-//        List<DirectIndexDoc> results = mongoOps.find(query, DirectIndexDoc.class, "directIndexDoc");
-//        if (results.size() == 1) {
-//            for (DirectIndexTuple directIndexTuple : results.get(0).getListOfWords()) {
-//                if (directIndexTuple.getWord().equals(key)) {
-//                    return directIndexTuple;
-//                }
-//            }
-//        }
-//        return null;
-//    }
-//
-//    default int getTotalNumberOfDocs() {
-//        MongoOperations mongoOps = new MongoTemplate(MongoClients.create(), "test");
-//        Query mongoQuery = new Query();
-//
-//        long totalNoDocuments = mongoOps.count(mongoQuery, "directIndexDoc");
-//        return (int) totalNoDocuments;
-//    }
 
     // TODO: move to index package.
     default HashMap<String, HashMap<String, Integer>> loadReverseIndexFromFile(String filePath) {

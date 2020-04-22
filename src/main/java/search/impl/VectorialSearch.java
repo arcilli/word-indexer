@@ -26,6 +26,36 @@ public class VectorialSearch implements Search {
     private MongoOperations mongoOps = new MongoTemplate(MongoClients.create(), "test");
     private static BooleanSearch booleanSearch = new BooleanSearch();
 
+    @Override
+    @Nullable
+    /**
+     * Returns an ordered Set with interested words.
+     */
+    public Set<String> search(String query) {
+        Set<String> documentsAfterBooleanSearch = booleanSearch.search(query);
+        System.out.println("Transforming documents into documentVectors considering query terms.");
+        queryProcessor.parse(query);
+        assert documentsAfterBooleanSearch != null;
+        HashMap<String, HashMap<String, Double>> documentVectors = computeDocumentTfIdf(
+                new ArrayList<>(queryProcessor.queryTerms), documentsAfterBooleanSearch);
+
+        HashMap<String, Double> queryVector = new HashMap<>();
+        for (String term : queryProcessor.queryTerms) {
+            queryVector.put(term, getIdf(term) * getQueryTf(term, queryProcessor.queryTerms));
+        }
+
+        HashMap<String, Double> searchResultsSimilarity = new HashMap<>();
+        for (String doc : documentVectors.keySet()) {
+            double cosineSimilarityVal = cosineSimilarity(documentVectors.get(doc), queryVector);
+            if (0 != cosineSimilarityVal) {
+                searchResultsSimilarity.put(doc, cosineSimilarityVal);
+            }
+        }
+        searchResultsSimilarity = sortHashMapByValue(searchResultsSimilarity);
+        System.out.println(searchResultsSimilarity);
+        return searchResultsSimilarity.keySet();
+    }
+
     private static double getQueryTf(String word, Queue<String> queryTerms) {
         int noApparitions = 0;
         for (String term : queryTerms) {
@@ -62,36 +92,6 @@ public class VectorialSearch implements Search {
         double numitor = Math.sqrt(sumSquaresDoc1) * Math.sqrt(sumSquaresDoc2);
         double numarator = Math.abs(dotProduct);
         return numarator / numitor;
-    }
-
-    @Override
-    @Nullable
-    /**
-     * Returns an ordered Set with interested words.
-     */
-    public Set<String> search(String query) {
-        Set<String> documentsAfterBooleanSearch = booleanSearch.search(query);
-        System.out.println("Transforming documents into documentVectors considering query terms.");
-        queryProcessor.parse(query);
-        assert documentsAfterBooleanSearch != null;
-        HashMap<String, HashMap<String, Double>> documentVectors = computeDocumentTfIdf(
-                new ArrayList<>(queryProcessor.queryTerms), documentsAfterBooleanSearch);
-
-        HashMap<String, Double> queryVector = new HashMap<>();
-        for (String term : queryProcessor.queryTerms) {
-            queryVector.put(term, getIdf(term) * getQueryTf(term, queryProcessor.queryTerms));
-        }
-
-        HashMap<String, Double> searchResultsSimilarity = new HashMap<>();
-        for (String doc : documentVectors.keySet()) {
-            double cosineSimilarityVal = cosineSimilarity(documentVectors.get(doc), queryVector);
-            if (0 != cosineSimilarityVal) {
-                searchResultsSimilarity.put(doc, cosineSimilarityVal);
-            }
-        }
-        searchResultsSimilarity = sortHashMapByValue(searchResultsSimilarity);
-        System.out.println(searchResultsSimilarity);
-        return searchResultsSimilarity.keySet();
     }
 
     private double getTf(String key, String doc) {
